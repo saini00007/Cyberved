@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPSIFS Registration Form</title>
+    <style>
+        :root {
+            --primary: #e99331;
+            --secondary: #e19d36;
+            --accent: #e99331;
+            --text-light: #ffffff;
+            --text-dark: #e99331;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            background: var(--primary);
+            color: var(--text-light);
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
+
+        .form-container {
+            background: rgb(37, 23, 77);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            background: var(--accent);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 500;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #ad5600;
+        }
+
+        .error {
+            color: #ff0000;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef5350;
+        }
+
+        .alert-success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #66bb6a;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>UPSIFS Call For Paper</h1>
+            <p>Dimensions of Cyber Warfare, Multilateral Legal Frameworks & Strategic Countermeasures</p>
+        </div>
+
+        <div id="alertBox" class="alert"></div>
+
+        <div class="form-container">
+            <form id="registrationForm" onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" id="middleName" name="middleName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="designation">Designation</label>
+                        <select id="designation" name="designation" required>
+                            <option value="">Select Designation</option>
+                            <option value="student">Student</option>
+                            <option value="professional">Professional</option>
+                            <option value="academician">Academician</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Telephone</label>
+                        <input type="tel" id="telephone" name="telephone" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp Number</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" required pattern="[0-9]{10}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telegram">Telegram ID</label>
+                        <input type="text" id="telegram" name="telegram">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount (₹)</label>
+                        <input type="text" id="amount" name="amount" value="5,000.00" readonly>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">Continue & Pay</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        const alertBox = document.getElementById('alertBox');
+
+        function showAlert(message, type) {
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+
+        function validatePhone(phone) {
+            return /^\d{10}$/.test(phone);
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Validate phone numbers
+            const phone = form.telephone.value;
+            const whatsapp = form.whatsapp.value;
+            
+            if (!validatePhone(phone) || !validatePhone(whatsapp)) {
+                showAlert('Please enter valid 10-digit phone numbers', 'error');
+                return;
+            }
+            
+            try {
+                submitBtn.classList.add('loading');
+                submitBtn.textContent = 'Processing...';
+                
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                data.submissionDate = new Date().toISOString();
+                
+                // Remove commas from amount before sending
+                data.amount = data.amount.replace(/,/g, '');
+                
+                localStorage.setItem('registrationData', JSON.stringify(data));
+                
+                const response = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('Registration successful! Redirecting to payment...', 'success');
+                    setTimeout(() => {
+                        window.location.href = result.redirectUrl;
+                    }, 2000);
+                } else {
+                    throw new Error(result.error || 'Registration failed');
+                }
+                
+            } catch (error) {
+                console.error('Submission error:', error);
+                showAlert('Registration failed. Please try again.', 'error');
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = 'Continue & Pay';
+            }
+        }
+
+        // Real-time validation
+        const form = document.getElementById('registrationForm');
+        const inputs = form.querySelectorAll('input[required], select[required]');
+
+        inputs.forEach(input => {
+            input.addEventListener('invalid', (event) => {
+                event.preventDefault();
+                input.classList.add('error');
+            });
+
+            input.addEventListener('input', () => {
+                input.classList.remove('error');
+                if (input.type === 'tel') {
+                    input.value = input.value.replace(/\D/g, '').slice(0, 10);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
