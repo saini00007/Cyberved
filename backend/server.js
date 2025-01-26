@@ -1,64 +1,55 @@
 // server.js
 import express from 'express';
-import pg from 'pg';
 import cors from 'cors';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { createObjectCsvWriter } from 'csv-writer';
+import { existsSync } from 'fs';
 
 const app = express();
-const { Pool } = pg;
-
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-});
-
 app.use(cors());
 app.use(express.json());
 
-app.post('/api/register', async (req, res) => {
-  const {
-    firstName,
-    middleName,
-    lastName,
-    designation,
-    telephone,
-    whatsapp,
-    telegram,
-    email,
-    amount,
-    submissionDate
-  } = req.body;
+const csvWriter = createObjectCsvWriter({
+  path: 'registrations.csv',
+  header: [
+    { id: 'firstName', title: 'First Name' },
+    { id: 'middleName', title: 'Middle Name' },
+    { id: 'lastName', title: 'Last Name' },
+    { id: 'designation', title: 'Designation' },
+    { id: 'telephone', title: 'Telephone' },
+    { id: 'whatsapp', title: 'WhatsApp' },
+    { id: 'telegram', title: 'Telegram' },
+    { id: 'email', title: 'Email' },
+    { id: 'amount', title: 'Amount' },
+    { id: 'submissionDate', title: 'Submission Date' }
+  ],
+  append: existsSync('registrations.csv')
+});
 
+app.post('/register', async (req, res) => {
+  const { firstName, middleName, lastName, designation, telephone, whatsapp, telegram, email, amount } = req.body;
   try {
-    const result = await pool.query(
-      `INSERT INTO registrations (
-        first_name,
-        middle_name,
-        last_name,
-        designation,
-        telephone,
-        whatsapp,
-        telegram,
-        email,
-        amount,
-        submission_date
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
-      [firstName, middleName, lastName, designation, telephone, whatsapp, 
-       telegram, email, amount, submissionDate]
-    );
+    if (!firstName || !lastName || !designation || !telephone || !whatsapp || !email || !amount) {
+      return res.status(400).json({
+        success: false,
+         error: 'Required fields missing!'
+      });
+    }
+
+    const now = new Date();
+    const submissionData = { ...req.body, submissionDate: now };
+
+    await csvWriter.writeRecords([submissionData]);
 
     res.json({
       success: true,
-      redirectUrl: `http://localhost:5000/payment/${result.rows[0].id}`
+      redirectUrl: "https://pages.razorpay.com/upsifs-cyberveda"
     });
   } catch (error) {
-    console.error('Database error:', error);
-    res.status(500).json({ success: false, error: 'Registration failed' });
+    console.error('Error writing to CSV:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Registration failed'
+    });
   }
 });
 

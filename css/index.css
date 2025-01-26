@@ -67,9 +67,14 @@ body {
 }
 
 .logo-placeholder img {
-    width: clamp(80px,  80px);
-    height: clamp(35px, 5vw, 60px);
+    width: 130px;
+    height: 45px;
     transition: transform 0.3s ease;
+}
+.logo-placeholder1 img{
+    
+    height: 80px;
+    transition: transform 0.3s ease;   
 }
 
 .brand-name {
