@@ -168,14 +168,15 @@ a:hover {
 }
 
 /* Hero Section */
+/* Enhanced Hero Layout */
+/* Hero Section Styles */
 .hero {
-    min-height: 100vh;
-    background: var(--gradient-secondary);
-    padding-top: 80px;
+   
+    background: linear-gradient(135deg, #1A0F2E 0%, #2C1654 100%);
     position: relative;
     overflow: hidden;
-    display: flex;
-    align-items: center;
+    padding-top: 60px;
+    height: 70px;
 }
 
 .hero::before {
@@ -185,83 +186,213 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('/images/pattern.png') center/cover;
+    max-height: 400px;
     opacity: 0.1;
 }
 
 .hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 4rem 1rem;
-    text-align: center;
     position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    
+    padding: 2rem;
     z-index: 2;
-    color: var(--text-light);
 }
 
-.organizers-banner {
-    display: flex;
-    justify-content: center;
-    gap: 5rem;
-    margin-bottom: 1rem;
+.hero-left {
+    max-width: 550px;
+    margin-right: auto;
+}
+
+.hero-right {
+    position: absolute;
+    top: 90px;
+    right: 200px;
+    width: 300px;
+    padding: 1rem;
+}
+
+.main-logo {
     
-}
-
-.org-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    
-    border-radius: var(--border-radius);
-    text-align: center;
-    width: 125px;
-    height: 120px;
-}
-
-.org-card img {
-    height: 100px;
-    margin-top: 1rem;   
-}
-
-.org-card h3 {
-    font-size: 1rem;
-    color: var(--text-light);
+    max-width: 300px;
+    height: auto;
+    filter: drop-shadow(0 10px 100px rgba(230, 79, 15, 0.2));
+    animation: fadeInRotate 1s ease-out;
 }
 
 .hero-title {
-    font-size: 3rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #FF7722 0%, #FF9955 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 3rem;
-    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
     animation: fadeInUp 0.6s ease-out;
 }
 
 .hero-subtitle {
-    font-size: 2rem;
-    color: var(--text-light);
-    margin-bottom: 2.5rem;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: #FFFFFF;
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.4;
     animation: fadeInUp 0.6s ease-out 0.2s backwards;
 }
 
 .event-meta {
     display: flex;
-    justify-content: center;
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     animation: fadeInUp 0.6s ease-out 0.4s backwards;
 }
 
 .meta-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.8rem 1.2rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
 }
 
 .meta-item i {
-    color: var(--primary);
+    color: #FF7722;
+    font-size: 1.5rem;
 }
 
+.meta-item span {
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.organizers-banner {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    animation: fadeInUp 0.6s ease-out 0.6s backwards;
+    margin-left: 5rem;
+}
+
+.org-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 0.8rem;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.org-card:hover {
+    transform: translateY(-5px);
+}
+
+.org-card img {
+    width: 100%;
+    height: auto;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .hero-content {
+        padding: 1.5rem;
+    }
+    
+    .hero-left {
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero {
+        min-height: auto;
+        padding-bottom: 2rem;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-right {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .main-logo {
+        max-width: 250px;
+    }
+
+    .hero-left {
+        max-width: 100%;
+    }
+
+    .event-meta {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .organizers-banner {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content {
+        padding: 1rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .meta-item {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .org-card {
+        width: 90px;
+        height: 90px;
+    }
+}
 /* Hero Stats */
 .hero-stats {
     display: grid;
@@ -1303,7 +1434,7 @@ a:hover {
 }
 /* Hero Section Responsive Updates */
 .hero {
-    min-height: 100vh;
+    min-height: 600px;
     padding-top: clamp(60px, 10vh, 80px);
 }
 

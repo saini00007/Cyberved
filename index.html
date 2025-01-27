@@ -10,24 +10,44 @@
     <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <!-- Main Navbar -->
     <nav class="navbar">
-        <div class="partner-logos">
+        <div class="nav-left">
             <div class="logo-placeholder1">
                 <img src="/images/UPIFS1.png" alt="Logo 1">
             </div>
+           
+        </div>
+    
+        <button class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    
+        <div class="nav-menu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="overview.html" class="nav-link">Overview</a>
+            <a href="call-for-paper.html" class="nav-link">Call For Paper</a>
+            <a href="hackathon.html" class="nav-link">Hackathon</a>
+            <a href="summit.html" class="nav-link">Summit</a>
+            <div class="dropdown">
+                <button class="dropbtn">About <i class="fas fa-chevron-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="#">About Speakers</a>
+                    <a href="#">About Organizer</a>
+                    <a href="#">About Sponsors</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="nav-right">
+            <button class="register-btn">Register Now</button>
             <div class="logo-placeholder">
                 <img src="/images/CF.png" alt="Logo 2">
             </div>
-        
         </div>
-        
-        <div class="brand-name"></div>
-        
-        <button class="register-btn">Register Now</button>
     </nav>
-
-    <!-- Temporary Navbar -->
+  
     
 
     <!-- Hero Banner Slider -->
@@ -77,7 +97,7 @@
             </div>
             <div class="patron-card">
                 <div class="patron-image">
-                    <img src="images/Shri-yogi-adityanath.png" alt="Patron 2">
+                    <img src="images/The_Uttar_Pradesh_Chief_Minister.jpg" alt="Patron 2">
                 </div>
                 <div class="patron-content">
                     <h3>Shri Yogi Adityanath</h3>
@@ -159,9 +179,10 @@
                     <h3>Hackathon</h3>
                     <p>Hackathon on Open Source Intelligence (OSINT) for Cyber Defense</p>
                     <div class="program-details">
-                        <span><i class="fas fa-calendar"></i> 17-18March 2025</span>
-                        <span><i class="fas fa-users"></i> 500+ Participants</span>
-                        <span><i class="fas fa-clock"></i> 48 Hours</span>
+                        <span><i class="fas fa-calendar"></i> 16-18March 2025</span>
+                        <span><i class="fas fa-users"></i> 50+ Teams</span>
+                        <span><i class="fas fa-clock"></i> 72 Hours</span>
+                        <span><i class="fa-solid fa-certificate"></i> Participants Certificate</span>
                     </div>
                     <a href="hackathon.html" class="program-link">Learn more</a>
                 </div>
@@ -189,7 +210,7 @@
                     <h3>Call For Papers</h3>
                     <p>Submit your research papers on Cybersecurity, Digital Forensics, and Information Warfare</p>
                     <div class="program-details">
-                        <span><i class="fas fa-calendar"></i> 26 January 2025</span>
+                        <span><i class="fas fa-calendar"></i> 17-18March 2025</span>
                         <span><i class="fas fa-award"></i> Best Paper Awards</span>
                         <span><i class="fas fa-book"></i> Publication Opportunity</span>
                     </div>
@@ -291,7 +312,8 @@
             
             <div class="footer-section">
                 <h3>Contact Us</h3>
-                <p><i class="fas fa-phone"></i> +91 97111 47900, +91 89397 32808</p>
+                <p><i class="fas fa-phone"></i> +91 97111 47900</p>
+                <p><i class="fa-brands fa-whatsapp"></i> +91 89397 32808</p>
                 <p><i class="fas fa-envelope"></i> cyberveda@upsifs.ac.in</p>
                 <p><i class="fas fa-envelope"></i> mentor@cybervidyapeeth.in</p>
 
@@ -310,10 +332,12 @@
             
                 <h3>Powered by</h3>
                 <div class="power-logos">
+                    <img src="/images/Cybervidyapeeth.png" alt="cybervidyapeeth">
+                    <img src="/images/youth4nation.png" alt="Youth4Nation">
                     <img src="/images/Abhedi .png" alt="cybervidyapeeth">
                     <img src="/images/Pivot.png" alt="Pivot">
-                    <img src="/images/youth4nation.png" alt="Youth4Nation">
-                    <img src="/images/Cybervidyapeeth.png" alt="cybervidyapeeth">
+                   
+                    
                 </div>
             </div>
         </div>

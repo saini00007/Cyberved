@@ -51,3 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
     slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
     slider.addEventListener('mouseleave', startAutoplay);
 });
+function toggleMenu() {
+    document.querySelector('.hamburger').classList.toggle('active');
+    document.querySelector('.nav-menu').classList.toggle('active');
+    
+    const spans = document.querySelectorAll('.hamburger span');
+    if (document.querySelector('.nav-menu').classList.contains('active')) {
+        spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+    } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+}
