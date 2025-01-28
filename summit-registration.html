@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPSIFS Call For Paper</title>
+    <title>Summit Registration Form</title>
     <style>
         :root {
             --primary: #e99331;
             --secondary: #e19d36;
             --accent: #e99331;
             --text-light: #ffffff;
-            --text-dark: #e99331;
+            --text-dark: #eba925;
             --border-radius: 8px;
             --error-color: #ff4444;
         }
@@ -75,26 +75,22 @@
             margin-left: 4px;
         }
 
-        input,
-        select {
+        input {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             font-size: 1rem;
             transition: border-color 0.3s ease;
-            background: white;
         }
 
-        input:focus,
-        select:focus {
+        input:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(233, 147, 49, 0.2);
         }
 
-        input.error,
-        select.error {
+        input.error {
             border-color: var(--error-color);
         }
 
@@ -133,10 +129,6 @@
             background: var(--accent);
         }
 
-        .primary-btn:hover {
-            background: var(--secondary);
-        }
-
         .secondary-btn {
             flex: 1;
             background: transparent;
@@ -171,8 +163,13 @@
         }
 
         @keyframes spin {
-            0% { transform: translateY(-50%) rotate(0deg); }
-            100% { transform: translateY(-50%) rotate(360deg); }
+            0% {
+                transform: translateY(-50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50%) rotate(360deg);
+            }
         }
 
         @media (max-width: 768px) {
@@ -186,8 +183,10 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>UPSIFS Call For Paper</h1>
-            <p>Dimensions of Cyber Warfare, Multilateral Legal Frameworks & Strategic Countermeasures</p>
+            <h1>3DAYS SUMMIT ON</h1>
+            <p>DIMENSION OF CYBER WARFARE,
+                MULTILATERAL LEGAL FRAMEWORKS
+                & STRATEGIC COUNTERMEASURES</p>
         </div>
 
         <div class="form-container">
@@ -212,16 +211,23 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="designation" class="required">Designation</label>
-                        <select id="designation" name="designation" required>
-                            <option value="">Select Designation</option>
-                            <option value="student">Student</option>
-                            <option value="professional">Professional</option>
-                            <option value="academician">Academician</option>
-                            <option value="other">Other</option>
-                        </select>
+                        <label for="organization" class="required">Organization Name</label>
+                        <input type="text" id="organization" name="organization" required>
                         <div class="error-message"></div>
                     </div>
+                    <div class="form-group">
+                        <label for="designation" class="required">Designation</label>
+                        <input type="text" id="designation" name="designation" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
                         <label for="telephone" class="required">Telephone</label>
                         <input type="tel" id="telephone" name="telephone" required>
@@ -232,28 +238,16 @@
                         <input type="tel" id="whatsapp" name="whatsapp" required>
                         <div class="error-message"></div>
                     </div>
-                </div>
-
-                <div class="form-row">
                     <div class="form-group">
-                        <label for="telegram">Telegram ID</label>
+                        <label for="telegram">Telegram ID (Optional)</label>
                         <input type="text" id="telegram" name="telegram">
                         <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="required">Email</label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="amount">Amount (₹)</label>
-                        <input type="text" id="amount" name="amount" value="5,000.00" readonly>
                     </div>
                 </div>
 
                 <div class="button-container">
                     <button type="submit" class="subbtn primary-btn" id="subbtn">
-                        Register & Submit Paper
+                        Register for Summit
                         <div class="spinner" id="submitSpinner"></div>
                     </button>
                     <a href="/index.html" class="subbtn secondary-btn">
@@ -317,7 +311,7 @@
             const submitBtn = document.getElementById('subbtn');
             const spinner = document.getElementById('submitSpinner');
 
-            form.querySelectorAll('input, select').forEach(field => {
+            form.querySelectorAll('input').forEach(field => {
                 field.addEventListener('blur', () => validateField(field));
                 field.addEventListener('input', () => {
                     if (field.classList.contains('error')) {
@@ -335,7 +329,7 @@
                 e.stopPropagation();
 
                 let isValid = true;
-                form.querySelectorAll('input, select').forEach(field => {
+                form.querySelectorAll('input').forEach(field => {
                     if (!validateField(field)) {
                         isValid = false;
                     }
@@ -354,7 +348,7 @@
 
                     // Prepare data for API
                     const apiData = {
-                        formType: 'call_for_paper',
+                        formType: 'summit',
                         firstName: data.firstName,
                         middleName: data.middleName,
                         lastName: data.lastName,
@@ -362,22 +356,32 @@
                         phone: data.telephone,
                         whatsapp: data.whatsapp,
                         telegram_id: data.telegram,
-                        designation: data.designation,
-                        amount: parseFloat(data.amount.replace(/[^0-9.]/g, ''))
+                        organization: data.organization,
+                        designation: data.designation
                     };
 
-                    const response = await fetch(`${API_URL}/paper`, {
+                    const response = await fetch(`${API_URL}/summit`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify(apiData)
+                        body: JSON.stringify({
+                            formType: "summit",
+                            firstName: data.firstName,
+                            middleName: data.middleName || "",
+                            lastName: data.lastName,
+                            email: data.email,
+                            telephone: data.telephone,    // changed from phone to telephone
+                            whatsapp: data.whatsapp,
+                            telegramId: data.telegram,    // changed from telegram_id to match the schema
+                            organization: data.organization,
+                            designation: data.designation
+                        })
                     });
 
                     if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || 'Registration failed');
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
 
                     const result = await response.json();
@@ -400,17 +404,15 @@
                         `;
                         successMessage.innerHTML = `
                             <h2 style="margin-bottom: 1rem;">Registration Successful!</h2>
-                            <p>Thank you for submitting your paper.</p>
-                            <p>You will receive a confirmation email with further instructions.</p>
+                            <p>Thank you for registering for the Cyber Warfare Summit 2025.</p>
+                            <p>You will receive a confirmation email shortly with further details.</p>
                         `;
                         document.body.appendChild(successMessage);
-                        
+
                         // Remove success message and reset form after 3 seconds
                         setTimeout(() => {
                             successMessage.remove();
                             form.reset();
-                            // Reset amount field to default value
-                            document.getElementById('amount').value = '5,000.00';
                         }, 3000);
                     } else {
                         throw new Error('Registration failed');
@@ -438,7 +440,7 @@
                         <p>Please try again or contact support if the problem persists.</p>
                     `;
                     document.body.appendChild(errorMessage);
-                    
+
                     setTimeout(() => {
                         errorMessage.remove();
                     }, 3000);
@@ -452,4 +454,5 @@
         });
     </script>
 </body>
+
 </html>

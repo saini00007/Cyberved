@@ -190,6 +190,27 @@
                 transform: translateY(-50%) rotate(360deg);
             }
         }
+        .button-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.primary-btn {
+    flex: 2;
+    background: var(--accent);
+}
+
+.secondary-btn {
+    flex: 1;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+.secondary-btn:hover {
+    background: rgba(233, 147, 49, 0.1);
+}
     </style>
 </head>
 
@@ -269,10 +290,15 @@
                     </div>
                 </div>
 
-                <button type="submit" class="subbtn" id="subbtn">
-                    Continue & Pay
-                    <div class="spinner" id="submitSpinner"></div>
-                </button>
+                <div class="button-container" style="display: flex; gap: 1rem;">
+                    <button type="submit" class="subbtn primary-btn" id="subbtn">
+                        Register for Hackathon
+                        <div class="spinner" id="submitSpinner"></div>
+                    </button>
+                    <a href="/index.html" class="subbtn secondary-btn" style="text-decoration: none; flex: 1; display: inline-block; text-align: center;">
+                        Return
+                    </a>
+                </div>
             </form>
         </div>
     </div>
